@@ -190,7 +190,7 @@ if __name__ == "__main__":
     
     assert category in ["chair", "airplane", "table"], f"{category} should be one of `chair`, `airplane`, or `table`."
 
-    X_gen = torch.load(sample_path).float()
+    X_gen = torch.from_numpy(np.load(sample_path)).float()
     # X_gen = torch.rand(1000, 128, 128, 128)  # For testing.
     # X_gen = (X_gen > 0.98).float()
 
