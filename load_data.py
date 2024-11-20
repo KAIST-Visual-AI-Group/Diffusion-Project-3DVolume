@@ -8,8 +8,9 @@ from tqdm import tqdm
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(BASE_DIR, "data")
 
+VOX_RES = (64, 64, 64) # 11.20 update: change the resolution of the voxels from 128^3 to 64^3.
 
-def voxelize(pts, vox_res=(128, 128, 128)):
+def voxelize(pts, vox_res=VOX_RES):
     """
     pts: np.ndarray [N,3]
     vox_res: (height, width, length)
