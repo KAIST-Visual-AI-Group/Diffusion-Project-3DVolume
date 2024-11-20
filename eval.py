@@ -55,7 +55,7 @@ def pairwise_CD(sample_pcs, ref_pcs, use_multiprocessing=True):
         for si, ri in indices:
             args.append((sample_pcs[si], ref_pcs[ri]))
         with tqdm(total=total_num) as pbar:
-            pool = mp.Pool(mp.cpu_count())
+            pool = mp.Pool(max(mp.cpu_count() - 2, 1))
 
             for result in pool.imap(processChamfer, args):
                 cd_results.append(result)
@@ -94,8 +94,8 @@ def jensen_shannon_divergence(voxel_set1, voxel_set2):
     """
     Compute the Jensen-Shannon Divergence between two 3D voxel sets.
     Args:
-        voxel_set1 (torch.Tensor): Binary 3D voxel grid (shape: N1 x 128 x 128 x 128).
-        voxel_set2 (torch.Tensor): Binary 3D voxel grid (shape: N2 x 128 x 128 x 128).
+        voxel_set1 (torch.Tensor): Binary 3D voxel grid (shape: N1 x NUM_GRID x NUM_GRID x NUM_GRID).
+        voxel_set2 (torch.Tensor): Binary 3D voxel grid (shape: N2 x NUM_GRID x NUM_GRID x NUM_GRID).
         N1 and N2: # of samples
     Returns:
         float: Jensen-Shannon Divergence value.
@@ -191,7 +191,7 @@ if __name__ == "__main__":
     assert category in ["chair", "airplane", "table"], f"{category} should be one of `chair`, `airplane`, or `table`."
 
     X_gen = torch.from_numpy(np.load(sample_path)).float()
-    # X_gen = torch.rand(1000, 128, 128, 128)  # For testing.
+    # X_gen = torch.rand(1000, *VOX_RES)  # For testing.
     # X_gen = (X_gen > 0.98).float()
 
     shapenet_dir = "./data/hdf5_data"  # TODO: CHANGE THE PATH IF NEEDED.

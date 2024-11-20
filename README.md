@@ -23,7 +23,7 @@
 </div>
 
 ## Description
-This project aims to build a 3D diffusion model, specifically targeting 3D volume diffusion. We train the model using voxel data at a resolution of (128, 128, 128) from the <a href=https://shapenet.org/ target="_blank">ShapeNet</a> dataset. A major challenge will be efficiently handling this high-resolution data within limited VRAM constraints.
+This project aims to build a 3D diffusion model, specifically targeting 3D volume diffusion. We train the model using voxel data at a resolution of (64, 64, 64) from the <a href=https://shapenet.org/ target="_blank">ShapeNet</a> dataset. A major challenge will be efficiently handling this high-resolution data within limited VRAM constraints.
 
 
 ## Data Specification
@@ -56,7 +56,7 @@ To assess the quality and diversity of the generated samples, we follow Achliopt
 
 JSD treats voxel sets as probability distributions over the 3D space, where each voxel grid represents the likelihood of being occupied. It then measures the Jensen-Shannon Divergence between the two input voxel sets, providing a similarity measure from the probabilistic perspective. In MMD and COV, we first compute the nearest neighbor in the reference set for each voxel in the sample set. COV evaluates the diversity of the samples by measuring how many voxels in the reference set are covered by the nearest neighbors from the sample set. On the other hand, MMD assesses the fidelity of the samples by calculating the distance between each voxel in the sample set and its corresponding nearest neighbor in the reference set.
 
-__*For each category*__, sample 1,000 voxels using your model and save them in `.npy` format with a shape of `(1000, 128, 128, 128)`. At the end of the sampling process, discretize the values to either 0 or 1 by applying a threshold, setting the value to 1 if x > 0.5 and to 0 otherwise. Once the data is saved, run the following command to measure JSD, MMD, and COV:
+__*For each category*__, sample 1,000 voxels using your model and save them in `.npy` format with a shape of `(1000, 64, 64, 64)`. At the end of the sampling process, discretize the values to either 0 or 1 by applying a threshold, setting the value to 1 if x > 0.5 and to 0 otherwise. Once the data is saved, run the following command to measure JSD, MMD, and COV:
 
 ```
 python eval.py {CATEGORY} {PATH/TO/YOUR_SAMPLE_DATA.NPY}
